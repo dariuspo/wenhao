@@ -7,7 +7,7 @@ build-log timeline. Every card sits at its own slight rotation and straightens o
 No framework, no build step. Open `wenhao.html` in a browser and it runs.
 
 ```
-wenhao.html      the whole page + ~30 lines of progressive-enhancement JS
+wenhao.html     the page (built to index.html) + a few lines of reveal JS
 styles.css      tokens, primitives, sections, responsive, motion
 assets/         placeholder art (see "Swapping in real images")
 scripts/        screenshot.mjs — visual QA harness
@@ -83,9 +83,9 @@ npm run build     # assemble dist/ locally to preview exactly what ships
 git push          # deploy
 ```
 
-`dist/` holds only `wenhao.html`, `styles.css`, and `assets/` — `claude.md`, `.mcp.json`, `.qa/`,
+`dist/` holds only `index.html`, `styles.css`, and `assets/` — `claude.md`, `.mcp.json`, `.qa/`,
 `scripts/`, and `node_modules/` are never uploaded. The page source is `wenhao.html`; the build
-copies it to `wenhao.html` so hosts serve it as the directory default.
+copies it to `index.html` so hosts serve it as the directory default.
 
 All paths in the page are relative, so it works unchanged under the `/wenhao/` subpath. If you
 later move it to a custom domain or a root-level site, nothing needs to change.
@@ -136,5 +136,5 @@ key text runs within 4% of the reference's measured widths.
 ## Accessibility
 
 Semantic landmarks, ordered headings, a skip link, real `alt` text, visible `:focus-visible`
-rings, and `prefers-reduced-motion` honoured (reveals and the pulsing badge dot stop). All body
+rings, and `prefers-reduced-motion` honoured (scroll reveals stop). All body
 and label text clears WCAG AA contrast.
