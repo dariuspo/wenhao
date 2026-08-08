@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="AI Finance Monitor analytics dashboard mockup">
+  <defs>
+    <linearGradient id="fn-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f8ef7" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#4f8ef7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="#f4f6fa"/>
+
+  <rect x="0" y="0" width="120" height="500" fill="#101a2e"/>
+  <circle cx="30" cy="30" r="9" fill="#4f8ef7"/>
+  <rect x="46" y="25" width="46" height="10" rx="5" fill="#2a3a58"/>
+  <g fill="#24334f">
+    <rect x="18" y="66" width="84" height="8" rx="4"/>
+    <rect x="18" y="88" width="62" height="8" rx="4"/>
+    <rect x="18" y="110" width="76" height="8" rx="4"/>
+    <rect x="18" y="132" width="54" height="8" rx="4"/>
+  </g>
+  <rect x="10" y="156" width="100" height="24" rx="7" fill="#1c2b47"/>
+  <rect x="18" y="164" width="66" height="8" rx="4" fill="#5b7bb0"/>
+
+  <rect x="120" y="0" width="680" height="42" fill="#ffffff"/>
+  <rect x="142" y="15" width="140" height="11" rx="5.5" fill="#ccd5e4"/>
+  <rect x="700" y="11" width="78" height="20" rx="10" fill="#4f8ef7"/>
+
+  <!-- KPI row -->
+  <g fill="#ffffff">
+    <rect x="142" y="60" width="152" height="76" rx="8"/>
+    <rect x="310" y="60" width="152" height="76" rx="8"/>
+    <rect x="478" y="60" width="152" height="76" rx="8"/>
+    <rect x="646" y="60" width="132" height="76" rx="8"/>
+  </g>
+  <g fill="#d6dfec">
+    <rect x="160" y="76" width="60" height="7" rx="3.5"/>
+    <rect x="328" y="76" width="60" height="7" rx="3.5"/>
+    <rect x="496" y="76" width="60" height="7" rx="3.5"/>
+    <rect x="664" y="76" width="60" height="7" rx="3.5"/>
+  </g>
+  <g fill="#3c4d68">
+    <rect x="160" y="94" width="84" height="16" rx="4"/>
+    <rect x="328" y="94" width="72" height="16" rx="4"/>
+    <rect x="496" y="94" width="90" height="16" rx="4"/>
+    <rect x="664" y="94" width="66" height="16" rx="4"/>
+  </g>
+  <g>
+    <rect x="160" y="118" width="34" height="7" rx="3.5" fill="#3f9e6b"/>
+    <rect x="328" y="118" width="34" height="7" rx="3.5" fill="#d0574f"/>
+    <rect x="496" y="118" width="34" height="7" rx="3.5" fill="#3f9e6b"/>
+    <rect x="664" y="118" width="34" height="7" rx="3.5" fill="#3f9e6b"/>
+  </g>
+
+  <!-- main chart -->
+  <rect x="142" y="152" width="440" height="196" rx="8" fill="#ffffff"/>
+  <path d="M170 300 L214 274 L258 288 L302 236 L346 252 L390 206 L434 224 L478 186 L522 200 L556 168 L556 328 L170 328 Z" fill="url(#fn-area)"/>
+  <path d="M170 300 L214 274 L258 288 L302 236 L346 252 L390 206 L434 224 L478 186 L522 200 L556 168" fill="none" stroke="#4f8ef7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M170 312 L214 306 L258 310 L302 292 L346 300 L390 282 L434 292 L478 270 L522 278 L556 258" fill="none" stroke="#c9b3ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+  <g fill="#eef2f8">
+    <rect x="170" y="336" width="386" height="1"/>
+  </g>
+
+  <!-- anomaly list -->
+  <rect x="598" y="152" width="180" height="196" rx="8" fill="#ffffff"/>
+  <rect x="616" y="170" width="74" height="8" rx="4" fill="#d6dfec"/>
+  <g>
+    <rect x="616" y="192" width="144" height="30" rx="6" fill="#fdf0ef"/>
+    <circle cx="632" cy="207" r="5" fill="#d0574f"/>
+    <rect x="646" y="203" width="94" height="7" rx="3.5" fill="#e2b3ae"/>
+
+    <rect x="616" y="230" width="144" height="30" rx="6" fill="#fdf7ea"/>
+    <circle cx="632" cy="245" r="5" fill="#d99a2b"/>
+    <rect x="646" y="241" width="78" height="7" rx="3.5" fill="#e6cfa2"/>
+
+    <rect x="616" y="268" width="144" height="30" rx="6" fill="#f2f6fb"/>
+    <circle cx="632" cy="283" r="5" fill="#7c95c4"/>
+    <rect x="646" y="279" width="88" height="7" rx="3.5" fill="#ccd8ea"/>
+
+    <rect x="616" y="306" width="144" height="30" rx="6" fill="#f2f6fb"/>
+    <circle cx="632" cy="321" r="5" fill="#7c95c4"/>
+    <rect x="646" y="317" width="66" height="7" rx="3.5" fill="#ccd8ea"/>
+  </g>
+
+  <!-- table -->
+  <rect x="142" y="364" width="636" height="108" rx="8" fill="#ffffff"/>
+  <g fill="#dde5f0">
+    <rect x="162" y="382" width="110" height="8" rx="4"/>
+    <rect x="330" y="382" width="80" height="8" rx="4"/>
+    <rect x="470" y="382" width="100" height="8" rx="4"/>
+    <rect x="640" y="382" width="70" height="8" rx="4"/>
+  </g>
+  <g fill="#edf1f7">
+    <rect x="162" y="410" width="596" height="8" rx="4"/>
+    <rect x="162" y="434" width="596" height="8" rx="4"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "name": "wenhao-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal portfolio site \u2014 notebook / desk-surface aesthetic. Static HTML + CSS, no build step.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "shot": "node scripts/screenshot.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

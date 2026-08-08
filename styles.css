@@ -1,0 +1,1223 @@
+/* =============================================================================
+   Wenhao Kho — personal site
+   Notebook / desk-surface aesthetic. Static CSS, no build step.
+
+   Layout is tuned against a 2560px-wide reference capture; the container caps
+   at 1280px so the page reads identically on normal displays.
+
+   Contents
+     1. Tokens
+     2. Reset & page ground
+     3. Primitives  (.paper .tape .polaroid .sticky .pill .eyebrow .scribble .chip)
+     4. Sections
+     5. Responsive
+     6. Motion & a11y
+   ========================================================================== */
+
+/* ---------- 1. Tokens ----------------------------------------------------- */
+
+:root {
+  /* paper — sampled from the reference screenshot. claude.md's palette table
+     lists paler values (#fbf9f1 paper, #fff9c4/#fee2e2/#e0f2fe/#dcfce7 notes);
+     those read washed out beside the reference, so the screenshot wins here. */
+  --paper: #f2efe3;
+  --paper-deep: #ebe7d8;
+  --rule: rgba(96, 140, 190, 0.20);
+  --rule-gap: 28px;
+  --margin-rule: rgba(239, 68, 68, 0.25);
+  --margin-x: 80px;
+  --card: #fdfcf7;
+
+  /* ink */
+  --ink: #1a1a1a;
+  --ink-soft: #555555;
+  /* blueprint offers #555–#777 for muted text; #666 is the lightest of that
+     range that still clears WCAG AA (4.5:1) on the #f2efe3 paper */
+  --ink-faint: #666666;
+
+  /* accents */
+  --accent-blue: #2c48c8;
+  --accent-red: #cf4634;
+  --accent-purple: #7c5cd6;
+  --accent-teal: #1f8f83;
+  --marker: #fce06a;
+
+  /* sticky notes */
+  --note-yellow: #f7e294;
+  --note-pink: #f6c7d0;
+  --note-blue: #bfd9f0;
+  --note-green: #cfe7ae;
+  --note-white: #fbfaf4;
+
+  /* status */
+  --status-live: #2e9e5b;
+  --status-beta: #d98324;
+  --status-mvp: #7c5cd6;
+
+  /* type */
+  --font-display: "Caveat", "Segoe Script", "Bradley Hand", cursive;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+  /* structure — 1364 less 2x32 gutter lands the content column on the
+     reference's ~1300px measure */
+  --container: 1364px;
+  --gutter: clamp(1.25rem, 4vw, 2rem);
+  --section-gap: 68px;
+
+  /* elevation — layered so cards read as paper resting on paper */
+  --lift-1: 0 1px 2px rgba(60, 50, 30, 0.07), 0 4px 10px rgba(60, 50, 30, 0.06);
+  --lift-2: 0 2px 4px rgba(60, 50, 30, 0.09), 0 10px 24px rgba(60, 50, 30, 0.1);
+  --lift-3: 0 4px 8px rgba(60, 50, 30, 0.11), 0 18px 38px rgba(60, 50, 30, 0.14);
+}
+
+/* ---------- 2. Reset & page ground --------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* ruled lines + red margin rule, painted on the page itself */
+  background-image:
+    linear-gradient(
+      to right,
+      transparent calc(var(--margin-x) - 1px),
+      var(--margin-rule) calc(var(--margin-x) - 1px),
+      var(--margin-rule) calc(var(--margin-x) + 1px),
+      transparent calc(var(--margin-x) + 1px)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--rule-gap) - 1px),
+      var(--rule) calc(var(--rule-gap) - 1px),
+      var(--rule) var(--rule-gap)
+    );
+  /* both layers scroll with the document so the margin rule runs its full
+     height — `fixed` would clip it to the first viewport */
+  background-attachment: scroll;
+  overflow-x: hidden;
+}
+
+/* height:auto is required — the width/height attributes on <img> are
+   presentational hints that would otherwise beat any CSS aspect-ratio. */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--accent-blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 3. Primitives ------------------------------------------------- */
+
+/* .paper — a sheet dropped on the desk at a slight angle */
+.paper {
+  --rot: 0deg;
+  position: relative;
+  background: var(--card);
+  border: 1px solid rgba(120, 110, 85, 0.16);
+  border-radius: 3px;
+  box-shadow: var(--lift-1);
+  transform: rotate(var(--rot));
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+/* .tape — washi strip overhanging the top edge */
+.tape::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 104px;
+  height: 27px;
+  transform: translateX(-50%) rotate(-2.5deg);
+  background: linear-gradient(
+    180deg,
+    rgba(236, 226, 188, 0.82),
+    rgba(224, 212, 168, 0.7)
+  );
+  border-left: 1px dashed rgba(255, 255, 255, 0.5);
+  border-right: 1px dashed rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 3px rgba(80, 70, 45, 0.14);
+  z-index: 3;
+}
+.tape--left::before {
+  left: 34px;
+  transform: rotate(-6deg);
+}
+.tape--right::before {
+  left: auto;
+  right: 30px;
+  transform: rotate(5deg);
+}
+.tape--brand::before {
+  left: 34px;
+  top: -17px;
+  width: 88px;
+  height: 44px;
+  transform: rotate(-14deg);
+}
+.tape--blue::before {
+  background: linear-gradient(
+    180deg,
+    rgba(190, 214, 232, 0.78),
+    rgba(168, 198, 222, 0.68)
+  );
+}
+.tape--mint::before {
+  background: linear-gradient(
+    180deg,
+    rgba(198, 226, 200, 0.75),
+    rgba(176, 210, 180, 0.66)
+  );
+}
+
+/* .polaroid — white frame, thick chin for a handwritten caption */
+.polaroid {
+  --rot: -1.6deg;
+  position: relative;
+  transform: rotate(var(--rot));
+  padding: 13px 13px 0;
+  background: #fffef9;
+  border-radius: 2px;
+  box-shadow: var(--lift-2);
+}
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  background: var(--paper-deep);
+}
+.polaroid figcaption {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  color: #4a4f5c;
+  text-align: center;
+  padding: 0.45rem 0 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+/* .sticky — pinned note */
+.sticky {
+  --rot: 0deg;
+  --note: var(--note-yellow);
+  position: relative;
+  padding: 1.15rem 1.25rem 1.1rem;
+  background: var(--note);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 2px rgba(70, 60, 35, 0.12),
+    0 8px 18px rgba(70, 60, 35, 0.14);
+  transform: rotate(var(--rot));
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+/* pushpin */
+.sticky--pin::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  translate: -50% 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 30%,
+    rgba(255, 255, 255, 0.9),
+    var(--pin, #d9534f) 62%
+  );
+  box-shadow: 0 2px 4px rgba(60, 40, 30, 0.35);
+  z-index: 3;
+}
+.sticky--pin-left::before {
+  left: 26px;
+  translate: 0 0;
+}
+.sticky--pin-right::before {
+  left: auto;
+  right: 22px;
+  translate: 0 0;
+}
+
+/* .pill — status badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: #fff;
+}
+.pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill--live {
+  color: var(--status-live);
+}
+.pill--beta {
+  color: var(--status-beta);
+}
+.pill--mvp {
+  color: var(--status-mvp);
+}
+
+/* .eyebrow — mono utility label */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.eyebrow--comment {
+  text-transform: none;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+
+/* .chip — #tag */
+.chip {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(120, 120, 130, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
+/* section heading + hand-drawn rule */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 0;
+}
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 4.2vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.scribble {
+  flex: 0 0 auto;
+  width: 190px;
+  height: 12px;
+  color: var(--accent-blue);
+  align-self: center;
+}
+.scribble path {
+  stroke: currentColor;
+  stroke-width: 2.4;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.section {
+  padding-block: var(--section-gap);
+}
+.section[id] {
+  scroll-margin-top: 110px;
+}
+
+/* hover: straighten the sheet and lift it */
+@media (hover: hover) {
+  .paper.is-liftable:hover,
+  .sticky.is-liftable:hover,
+  .polaroid.is-liftable:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: var(--lift-3);
+  }
+}
+
+/* ---------- 4. Sections --------------------------------------------------- */
+
+/* --- 4.1 Masthead --- */
+.masthead {
+  padding-block: 30px 8px;
+}
+.masthead__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand {
+  --rot: -1.2deg;
+  padding: 0.7rem 1.35rem 0.8rem;
+}
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+.brand__role {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
+}
+
+.nav {
+  --rot: 0.5deg;
+  border-radius: 999px;
+  padding: 0.55rem 0.7rem;
+  margin-top: 0.4rem;
+}
+.nav ul {
+  display: flex;
+  gap: 0.35rem;
+}
+.nav a {
+  display: block;
+  padding: 0.2rem 1rem 0.3rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+/* hover-only highlight — the nav carries no current-section state */
+.nav a:hover,
+.nav a:focus-visible {
+  background: var(--note-yellow);
+}
+
+.badge-building {
+  --rot: 3.5deg;
+  --note: var(--note-green);
+  padding: 0.5rem 0.95rem 0.6rem;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+.badge-building small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4e6b3c;
+}
+.badge-building strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2f5220;
+}
+
+/* --- 4.2 Hero --- */
+.hero {
+  padding-block: 44px 24px;
+}
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 0.95fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.hero__greeting {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: #46516e;
+  margin-bottom: 0.1rem;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 7vw, 5.75rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: 0.005em;
+}
+.hero h1 .line {
+  display: block;
+}
+.hero h1 .blue {
+  color: var(--accent-blue);
+}
+
+/* highlighter behind "ship." — a skewed slab painted under the glyphs */
+.marker {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.marker::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.1em;
+  right: -0.12em;
+  top: 0.18em;
+  bottom: 0.16em;
+  background: var(--marker);
+  transform: rotate(-1.2deg) skewX(-9deg);
+  border-radius: 3px 6px 4px 7px;
+  opacity: 0.92;
+}
+
+.hero__lede {
+  margin-top: 1.5rem;
+  max-width: 24rem;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+.hero__lede strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.location {
+  --rot: -1.8deg;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.6rem;
+  padding: 0.42rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+/* centre column */
+.hero__mid {
+  position: relative;
+  padding-top: 0.5rem;
+}
+.hero__arrow {
+  position: absolute;
+  left: -70px;
+  top: 34px;
+  width: 92px;
+  height: 86px;
+  color: var(--accent-blue);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.hero__arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hero__photo {
+  --rot: -1.8deg;
+  position: relative;
+  max-width: 320px;
+  margin-inline: auto;
+}
+.paperclip {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  translate: -50% 0;
+  width: 26px;
+  height: 40px;
+  color: #9aa1ab;
+  z-index: 4;
+}
+.paperclip path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+.hero__note {
+  margin-top: 1rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--ink-faint);
+}
+
+/* right column — current focus */
+.focus h2 {
+  font-family: var(--font-display);
+  font-size: 2.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.focus .eyebrow {
+  display: block;
+  margin: 0.3rem 0 1.15rem;
+}
+.focus__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.focus__item {
+  padding: 1rem 1.15rem 1.1rem;
+}
+.focus__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.focus__name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #3a3320;
+}
+.focus__pct {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(90, 76, 40, 0.7);
+}
+.focus__desc {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #6b5c34;
+}
+
+.goal {
+  --rot: -1deg;
+  margin-top: 1.1rem;
+  padding: 0.95rem 1.2rem 1.1rem;
+  text-align: center;
+}
+.goal .eyebrow {
+  font-size: 0.58rem;
+}
+.goal__title {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--status-live);
+  margin: 0.15rem 0 0.6rem;
+  letter-spacing: 0.02em;
+}
+.goal__bar {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(46, 158, 91, 0.16);
+  overflow: hidden;
+}
+.goal__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--status-live);
+}
+.goal__meta {
+  margin-top: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* --- 4.3 Projects --- */
+.projects .scribble {
+  color: var(--accent-blue);
+}
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.95rem 2.3rem;
+  margin-top: 1.4rem;
+}
+
+.project {
+  padding: 11px 11px 0.7rem;
+  display: flex;
+  flex-direction: column;
+}
+.project__shot {
+  position: relative;
+  margin-bottom: 0.6rem;
+}
+/* Wide banner crop, as a real screenshot thumbnail reads. Anchored to the top
+   so the mockup's chrome (topbar, hero) survives the crop. */
+.project__shot img {
+  width: 100%;
+  aspect-ratio: 2.15 / 1;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 2px;
+  background: #14161d;
+}
+.project__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-inline: 0.35rem;
+}
+.project__icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(120, 120, 140, 0.11);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.project__name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+.project__kind {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  margin-top: -0.1rem;
+}
+.project__desc {
+  padding-inline: 0.35rem;
+  margin-top: 0.5rem;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  flex: 1;
+}
+.project__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.35rem 0;
+  margin-top: 0.55rem;
+  border-top: 1px dashed rgba(120, 110, 85, 0.22);
+}
+.project__stack {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+
+/* --- 4.4 Build log --- */
+.buildlog .scribble {
+  color: var(--accent-red);
+}
+.timeline {
+  position: relative;
+  margin-top: 1.6rem;
+  padding-left: 46px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  bottom: 10px;
+  border-left: 2px dashed rgba(120, 115, 95, 0.35);
+}
+.entry {
+  --rot: -0.5deg;
+  --dot: var(--status-beta);
+  position: relative;
+  padding: 0.8rem 1.2rem 0.9rem;
+}
+.entry::before {
+  content: "";
+  position: absolute;
+  left: -46px;
+  top: 14px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--dot);
+  box-shadow: 0 0 0 3px var(--paper);
+}
+.entry__date {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+.entry__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.2rem;
+}
+.entry__body {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: none;
+}
+.entry__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+/* --- 4.5 Notes --- */
+.notes .scribble {
+  color: var(--accent-purple);
+}
+.notes__sub {
+  display: block;
+  margin-bottom: 1.6rem;
+}
+/* Explicit columns rather than CSS multicol: the arrangement is deliberate,
+   and multicol fragments the pushpin pseudo-elements at column breaks. */
+.notes__wall {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.9rem;
+  align-items: start;
+}
+.notes__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.9rem;
+}
+
+.note__quote {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  line-height: 1.22;
+  color: #3c3a29;
+}
+.note__attr {
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-style: italic;
+  color: rgba(60, 55, 35, 0.6);
+}
+.note__title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #2a2e39;
+}
+.note__body {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.52;
+  color: rgba(38, 40, 50, 0.74);
+}
+.note__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  color: rgba(40, 40, 50, 0.5);
+}
+.note__tag {
+  font-weight: 700;
+  font-style: italic;
+}
+.note--white {
+  --note: var(--note-white);
+  border: 1px solid rgba(120, 110, 85, 0.16);
+}
+
+/* --- 4.6 About --- */
+.about .scribble {
+  color: var(--accent-teal);
+}
+.about__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2.6rem;
+  margin-top: 1.6rem;
+  align-items: start;
+}
+.about__card {
+  --rot: -0.6deg;
+  padding: 1.7rem 1.9rem 1.9rem;
+}
+.about__card h3,
+.numbers h3 {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1.1rem;
+}
+.about__card p + p {
+  margin-top: 0.95rem;
+}
+.about__card p {
+  font-size: 0.87rem;
+  line-height: 1.68;
+  color: var(--ink-soft);
+}
+
+.numbers {
+  --rot: 0.8deg;
+  padding: 1.7rem 1.9rem 1.9rem;
+  text-align: center;
+}
+.numbers__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 1rem;
+  margin-top: 0.4rem;
+}
+.numbers__value {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-teal);
+}
+.numbers li:nth-child(even) .numbers__value {
+  color: var(--accent-blue);
+}
+.numbers__label {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --- 4.7 Contact / footer --- */
+.contact {
+  padding-block: 84px 52px;
+  text-align: center;
+}
+.contact h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+.contact__cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.6rem;
+  max-width: 960px;
+  margin-inline: auto;
+}
+.contact__card {
+  padding: 1.25rem 1rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+.contact__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+}
+.contact__icon svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+.contact__label {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+.contact__handle {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  word-break: break-word;
+}
+
+.site-foot {
+  padding-bottom: 56px;
+  text-align: center;
+}
+.site-foot__links {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.site-foot__links a:hover {
+  color: var(--accent-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-foot__sign {
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--ink-soft);
+}
+.site-foot__sign .heart {
+  color: var(--accent-red);
+}
+
+/* ---------- 5. Responsive ------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  :root {
+    --section-gap: 110px;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 2rem;
+  }
+  .hero__copy {
+    grid-column: 1 / -1;
+  }
+  .hero__arrow {
+    display: none;
+  }
+
+  .projects__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .notes__wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+  .contact__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    --margin-x: -10px; /* pushes the red rule off-canvas */
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --section-gap: 88px;
+    --container: 100%;
+  }
+
+  /* flat on small screens — rotated cards get cramped and clip */
+  .paper,
+  .sticky,
+  .polaroid,
+  .entry,
+  .brand,
+  .nav,
+  .badge-building {
+    --rot: 0deg !important;
+  }
+
+  .masthead__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  .brand {
+    order: 1;
+  }
+  .badge-building {
+    order: 2;
+  }
+  .nav {
+    order: 3;
+    width: 100%;
+  }
+  .nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero {
+    padding-block: 32px 20px;
+  }
+  .hero__grid,
+  .projects__grid,
+  .contact__cards {
+    grid-template-columns: 1fr;
+  }
+  .hero__lede {
+    max-width: none;
+  }
+  .notes__wall {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .scribble {
+    width: 130px;
+  }
+
+  .timeline {
+    padding-left: 34px;
+  }
+  .entry::before {
+    left: -34px;
+  }
+}
+
+/* ---------- 6. Motion & a11y ---------------------------------------------- */
+
+/* Reveal starts hidden only when JS is present to un-hide it. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  .nav,
+  .hero__arrow {
+    display: none;
+  }
+}

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wenhao Kho — Software Engineer, CTO, Builder</title>
+    <meta
+      name="description"
+      content="Software engineer and CTO turning messy ideas into working products. Bootstrapping SaaS, writing code most days, shipping small & often."
+    />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#hero">Skip to content</a>
+
+    <!-- ===================================================== masthead ==== -->
+    <header class="masthead" id="masthead">
+      <div class="container masthead__inner">
+        <div class="brand paper tape tape--brand">
+          <div class="brand__name">Wenhao Kho</div>
+          <div class="brand__role">Software Engineer · CTO · Builder</div>
+        </div>
+
+        <nav class="nav paper" aria-label="Primary">
+          <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#buildlog">Build Log</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </nav>
+
+        <div class="badge-building sticky">
+          <small>Currently</small>
+          <strong>Building</strong>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ==================================================== hero ======== -->
+      <section class="hero" id="hero">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="hero__greeting">hi, I&rsquo;m &mdash;</p>
+            <h1>
+              <span class="line">Building</span>
+              <span class="line blue">things that</span>
+              <span class="line"><span class="marker">ship.</span></span>
+            </h1>
+            <p class="hero__lede">
+              I&rsquo;m a <strong>software engineer</strong> and <strong>CTO</strong> who likes
+              turning messy ideas into working products. Currently bootstrapping a few SaaS bets,
+              writing code most days, and shipping small &amp; often.
+            </p>
+            <p class="location paper">
+              <span aria-hidden="true">📍</span> Batam, Indonesia
+            </p>
+          </div>
+
+          <div class="hero__mid">
+            <!-- a pen stroke sweeping from the headline down toward the photo -->
+            <svg class="hero__arrow" viewBox="0 0 92 86" aria-hidden="true">
+              <path d="M84 8 C 76 30, 56 42, 30 52 C 22 55, 15 60, 10 68" />
+              <path d="M24 62 L8 70 L16 54" />
+            </svg>
+
+            <figure class="hero__photo polaroid is-liftable">
+              <svg class="paperclip" viewBox="0 0 26 40" aria-hidden="true">
+                <path d="M18 9 v20 a5.5 5.5 0 0 1 -11 0 V8 a8 8 0 0 1 16 0 v22" />
+              </svg>
+              <img
+                src="assets/photo-desk.svg"
+                alt="Wenhao at his desk, working at a laptop with a monitor behind"
+                width="640"
+                height="480"
+              />
+              <figcaption>build · ship · repeat</figcaption>
+            </figure>
+
+            <p class="hero__note"><span aria-hidden="true">↻</span> keep going, founder.</p>
+          </div>
+
+          <div class="focus">
+            <h2>Current Focus</h2>
+            <span class="eyebrow eyebrow--comment">// what I&rsquo;m building right now</span>
+
+            <ul class="focus__list">
+              <li
+                class="focus__item sticky is-liftable"
+                style="--note: var(--note-yellow); --rot: -1.4deg"
+              >
+                <div class="focus__top">
+                  <span class="focus__name">Gank</span>
+                  <span class="focus__pct">68%</span>
+                </div>
+                <p class="focus__desc">
+                  Community + tooling platform for indie game devs. Onboarding flow &amp; payments
+                  this sprint.
+                </p>
+              </li>
+              <li
+                class="focus__item sticky is-liftable"
+                style="--note: var(--note-pink); --rot: 1.1deg"
+              >
+                <div class="focus__top">
+                  <span class="focus__name">Kyzen Stay PMS</span>
+                  <span class="focus__pct">45%</span>
+                </div>
+                <p class="focus__desc">
+                  Property-management system for boutique stays. Booking engine + channel sync in
+                  progress.
+                </p>
+              </li>
+              <li
+                class="focus__item sticky is-liftable"
+                style="--note: var(--note-blue); --rot: -0.8deg"
+              >
+                <div class="focus__top">
+                  <span class="focus__name">AI Finance Monitor</span>
+                  <span class="focus__pct">22%</span>
+                </div>
+                <p class="focus__desc">
+                  Agent that watches cashflow &amp; flags anomalies. Prototyping the ingestion
+                  pipeline.
+                </p>
+              </li>
+            </ul>
+
+            <div class="goal paper tape tape--right is-liftable">
+              <span class="eyebrow">2026 Goal</span>
+              <div class="goal__title">SHIP 100</div>
+              <div
+                class="goal__bar"
+                role="progressbar"
+                aria-valuenow="16"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="Progress toward shipping 100 things in 2026"
+              >
+                <span style="width: 16%"></span>
+              </div>
+              <div class="goal__meta">16 / 100 · 16%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== projects ====== -->
+      <section class="section projects" id="projects" data-reveal>
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">// 01</span>
+            <h2>Projects</h2>
+            <svg class="scribble" viewBox="0 0 190 12" aria-hidden="true">
+              <path d="M3 8 C 40 2, 72 10, 106 5 C 134 1, 162 7, 187 4" />
+            </svg>
+          </div>
+
+          <div class="projects__grid">
+            <article class="project paper is-liftable" style="--rot: -1.1deg">
+              <div class="project__shot tape tape--left">
+                <img src="assets/shot-gank.svg" alt="Gank dashboard showing the asset marketplace" width="800" height="500" />
+              </div>
+              <div class="project__head">
+                <span class="project__icon" aria-hidden="true">🎮</span>
+                <div>
+                  <h3 class="project__name">Gank</h3>
+                  <div class="project__kind">platform · saas</div>
+                </div>
+              </div>
+              <p class="project__desc">
+                A home base for indie game devs — community, asset marketplace, and build tooling
+                in one place.
+              </p>
+              <div class="project__foot">
+                <span class="project__stack">Next · Postgres · Stripe</span>
+                <span class="pill pill--live">Live</span>
+              </div>
+            </article>
+
+            <article class="project paper is-liftable" style="--rot: 0.9deg">
+              <div class="project__shot tape tape--blue">
+                <img src="assets/shot-kyzen.svg" alt="Kyzen Stay PMS booking calendar with room rows" width="800" height="500" />
+              </div>
+              <div class="project__head">
+                <span class="project__icon" aria-hidden="true">🏨</span>
+                <div>
+                  <h3 class="project__name">Kyzen Stay PMS</h3>
+                  <div class="project__kind">property mgmt</div>
+                </div>
+              </div>
+              <p class="project__desc">
+                Run boutique stays end-to-end: bookings, channel sync, housekeeping, and owner
+                reports.
+              </p>
+              <div class="project__foot">
+                <span class="project__stack">Remix · Prisma · Redis</span>
+                <span class="pill pill--beta">Beta</span>
+              </div>
+            </article>
+
+            <article class="project paper is-liftable" style="--rot: -0.7deg">
+              <div class="project__shot tape tape--right">
+                <img src="assets/shot-finance.svg" alt="AI Finance Monitor dashboard with cashflow chart and anomaly list" width="800" height="500" />
+              </div>
+              <div class="project__head">
+                <span class="project__icon" aria-hidden="true">📊</span>
+                <div>
+                  <h3 class="project__name">AI Finance Monitor</h3>
+                  <div class="project__kind">ai · agent</div>
+                </div>
+              </div>
+              <p class="project__desc">
+                An always-on agent that reads your books, spots anomalies, and pings you before
+                they hurt.
+              </p>
+              <div class="project__foot">
+                <span class="project__stack">Python · LangGraph · DuckDB</span>
+                <span class="pill pill--mvp">MVP</span>
+              </div>
+            </article>
+
+            <article class="project paper is-liftable" style="--rot: 1.3deg">
+              <div class="project__shot tape tape--mint">
+                <img src="assets/shot-shipcli.svg" alt="Ship CLI terminal showing a production deploy" width="800" height="500" />
+              </div>
+              <div class="project__head">
+                <span class="project__icon" aria-hidden="true">🚀</span>
+                <div>
+                  <h3 class="project__name">Ship CLI</h3>
+                  <div class="project__kind">devtool · cli</div>
+                </div>
+              </div>
+              <p class="project__desc">
+                One command to go from commit to production. Zero-config previews and rollbacks
+                built in.
+              </p>
+              <div class="project__foot">
+                <span class="project__stack">Go · Docker · Fly</span>
+                <span class="pill pill--live">Live</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== build log ===== -->
+      <section class="section buildlog" id="buildlog" data-reveal>
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">// 02</span>
+            <h2>Build Log</h2>
+            <svg class="scribble" viewBox="0 0 190 12" aria-hidden="true">
+              <path d="M3 6 C 38 10, 70 2, 104 7 C 136 11, 160 4, 187 8" />
+            </svg>
+          </div>
+
+          <ol class="timeline">
+            <li class="entry paper is-liftable" style="--dot: #e0a52e; --rot: -0.5deg; width: 60%">
+              <div class="entry__date">May 28, 2026</div>
+              <h3 class="entry__title">Kyzen channel sync prototype</h3>
+              <p class="entry__body">
+                Hooked up the first OTA channel. Double-booking bug found &amp; squashed before it
+                reached a real guest.
+              </p>
+              <div class="entry__tags">
+                <span class="chip">#kyzen</span><span class="chip">#integrations</span>
+              </div>
+            </li>
+
+            <li class="entry paper is-liftable" style="--dot: #8b5cf6; --rot: 0.6deg; width: 66%">
+              <div class="entry__date">May 19, 2026</div>
+              <h3 class="entry__title">Finance Monitor — ingestion pipeline</h3>
+              <p class="entry__body">
+                Got the agent reading CSV + Plaid feeds into DuckDB. Anomaly scoring is naive but
+                it flagged a duplicate vendor.
+              </p>
+              <div class="entry__tags">
+                <span class="chip">#ai</span><span class="chip">#data</span
+                ><span class="chip">#pip</span>
+              </div>
+            </li>
+
+            <li class="entry paper is-liftable" style="--dot: #2aa3a3; --rot: -0.4deg; width: 55%">
+              <div class="entry__date">May 12, 2026</div>
+              <h3 class="entry__title">Crossed $6K MRR</h3>
+              <p class="entry__body">
+                Slow and steady. Gank + Ship CLI subscriptions are carrying it. Goal is still $10K
+                by year end.
+              </p>
+              <div class="entry__tags">
+                <span class="chip">#revenue</span><span class="chip">#bootstrapping</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ====================================================== notes ===== -->
+      <section class="section notes" id="notes" data-reveal>
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">// 03</span>
+            <h2>Notes &amp; Insights</h2>
+            <svg class="scribble" viewBox="0 0 190 12" aria-hidden="true">
+              <path d="M3 7 C 34 3, 66 9, 98 4 C 128 0, 158 8, 187 5" />
+            </svg>
+          </div>
+          <span class="eyebrow eyebrow--comment notes__sub"
+            >// scraps from the build — things I keep relearning</span
+          >
+
+          <!-- Columns are explicit: the arrangement of the wall is part of the design,
+               and it must not depend on the browser balancing a multicol. -->
+          <div class="notes__wall">
+            <div class="notes__col">
+              <blockquote
+                class="sticky sticky--pin is-liftable"
+                style="--note: var(--note-yellow); --rot: -1.5deg; --pin: #d4a017"
+              >
+                <p class="note__quote">
+                  &ldquo;Make something people want, then make it easy to pay for.&rdquo;
+                </p>
+                <footer class="note__attr">— stuck on my monitor since 2023</footer>
+              </blockquote>
+
+              <article class="sticky note--white is-liftable" style="--rot: 0.9deg">
+                <h3 class="note__title">Ship before you&rsquo;re ready</h3>
+                <p class="note__body">
+                  The product teaches you what to build. Real users beat a perfect roadmap every
+                  time.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#product</span><span>Jun 02</span>
+                </div>
+              </article>
+
+              <article
+                class="sticky sticky--pin sticky--pin-right is-liftable"
+                style="--note: var(--note-pink); --rot: -1.1deg; --pin: #c2405a"
+              >
+                <h3 class="note__title">The CTO is also the janitor</h3>
+                <p class="note__body">
+                  At a small company, leadership is mostly removing the rocks blocking everyone
+                  else&rsquo;s path.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#leadership</span><span>May 08</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="notes__col">
+              <figure
+                class="polaroid sticky--pin is-liftable"
+                style="--rot: 1.4deg; --pin: #4a8f3c"
+              >
+                <img
+                  src="assets/photo-workspace.svg"
+                  alt="The workspace: ultrawide monitor, laptop, plant, and a mug"
+                  width="420"
+                  height="300"
+                />
+                <figcaption>where the magic (mostly) happens</figcaption>
+              </figure>
+
+              <article
+                class="sticky sticky--pin sticky--pin-left is-liftable"
+                style="--note: var(--note-blue); --rot: 1deg; --pin: #3d7ab8"
+              >
+                <h3 class="note__title">Boring tech, exciting product</h3>
+                <p class="note__body">
+                  Postgres + a monolith got me further than any fancy stack. Save novelty for the
+                  parts users actually feel.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#engineering</span><span>May 24</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="notes__col">
+              <article
+                class="sticky sticky--pin sticky--pin-left is-liftable"
+                style="--note: var(--note-green); --rot: -0.9deg; --pin: #4a8f3c"
+              >
+                <h3 class="note__title">Charge from day one</h3>
+                <p class="note__body">
+                  Free users give feedback; paying users give truth. Price early, even if it
+                  stings.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#saas</span><span>May 15</span>
+                </div>
+              </article>
+
+              <article
+                class="sticky note--white sticky--pin sticky--pin-left is-liftable"
+                style="--rot: 0.7deg; --pin: #6f7b8f"
+              >
+                <h3 class="note__title">Write the changelog daily</h3>
+                <p class="note__body">
+                  A tiny daily log compounds. Future-me always thanks past-me for the breadcrumbs.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#habits</span><span>Apr 27</span>
+                </div>
+              </article>
+
+              <article
+                class="sticky sticky--pin sticky--pin-right is-liftable"
+                style="--note: var(--note-yellow); --rot: -1.2deg; --pin: #d4a017"
+              >
+                <h3 class="note__title">Done beats perfect</h3>
+                <p class="note__body">
+                  Momentum is a feature. A shipped B+ teaches you more than an unshipped A+ ever
+                  will.
+                </p>
+                <div class="note__foot">
+                  <span class="note__tag">#mindset</span><span>Apr 14</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================== about ===== -->
+      <section class="section about" id="about" data-reveal>
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">// 04</span>
+            <h2>About</h2>
+            <svg class="scribble" viewBox="0 0 190 12" aria-hidden="true">
+              <path d="M3 5 C 36 9, 68 3, 100 8 C 132 12, 158 5, 187 7" />
+            </svg>
+          </div>
+
+          <div class="about__grid">
+            <article class="about__card paper tape tape--left is-liftable">
+              <h3>About Me</h3>
+              <p>
+                I&rsquo;ve spent ~10 years going from a curious kid pulling apart WordPress themes
+                to leading engineering teams as a CTO.
+              </p>
+              <p>
+                These days I&rsquo;m happiest in the in-between: close enough to the code to ship a
+                feature, far enough back to set the direction. I build in public, bootstrap when I
+                can, and care a lot about momentum.
+              </p>
+              <p>
+                When I&rsquo;m not shipping, you&rsquo;ll find me chasing good coffee, bad startup
+                ideas, and longer hikes than my calves agree with.
+              </p>
+            </article>
+
+            <article class="numbers paper tape tape--blue tape--right is-liftable">
+              <h3>By The Numbers</h3>
+              <ul class="numbers__grid">
+                <li>
+                  <div class="numbers__value">10+</div>
+                  <div class="numbers__label">Years building</div>
+                </li>
+                <li>
+                  <div class="numbers__value">16</div>
+                  <div class="numbers__label">Products shipped</div>
+                </li>
+                <li>
+                  <div class="numbers__value">$6.2K</div>
+                  <div class="numbers__label">Current MRR</div>
+                </li>
+                <li>
+                  <div class="numbers__value">40+</div>
+                  <div class="numbers__label">Domains hoarded</div>
+                </li>
+                <li>
+                  <div class="numbers__value">2.4K</div>
+                  <div class="numbers__label">Commits this year</div>
+                </li>
+                <li>
+                  <div class="numbers__value">9K+</div>
+                  <div class="numbers__label">Bugs squashed</div>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== contact ===== -->
+      <section class="contact" id="contact" data-reveal>
+        <div class="container">
+          <h2>Let&rsquo;s build something <span aria-hidden="true">&rarr;</span></h2>
+
+          <div class="contact__cards">
+            <a
+              class="contact__card paper is-liftable"
+              style="--rot: -1.3deg"
+              href="https://wa.me/6282121002288"
+              rel="me noopener"
+            >
+              <span class="contact__icon" style="color: #25d366">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.5c-.1.2-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.6-.1l1.8.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"
+                  />
+                </svg>
+              </span>
+              <span class="contact__label">WhatsApp</span>
+              <span class="contact__handle">+62 821 2100 2288</span>
+            </a>
+
+            <a
+              class="contact__card paper is-liftable"
+              style="--rot: 0.8deg"
+              href="mailto:wenhaokho@gmail.com"
+            >
+              <span class="contact__icon" style="color: #d0574f">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 8.2L4.6 7H19.4L12 13.2Zm0 2.3 8-6.7V17H4V8.8l8 6.7Z"
+                  />
+                </svg>
+              </span>
+              <span class="contact__label">Email</span>
+              <span class="contact__handle">wenhaokho@gmail.com</span>
+            </a>
+
+            <a
+              class="contact__card paper is-liftable"
+              style="--rot: -0.6deg"
+              href="https://www.linkedin.com/in/wenhaokho"
+              rel="me noopener"
+            >
+              <span class="contact__icon" style="color: #0a66c2">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.76-1.95 4.02 0 4.76 2.5 4.76 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4V9Z"
+                  />
+                </svg>
+              </span>
+              <span class="contact__label">LinkedIn</span>
+              <span class="contact__handle">/in/wenhaokho</span>
+            </a>
+
+            <a
+              class="contact__card paper is-liftable"
+              style="--rot: 1.2deg"
+              href="https://github.com/wenhaokho"
+              rel="me noopener"
+            >
+              <span class="contact__icon" style="color: #24292f">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+                  />
+                </svg>
+              </span>
+              <span class="contact__label">GitHub</span>
+              <span class="contact__handle">@wenhaokho</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====================================================== footer ===== -->
+    <footer class="site-foot">
+      <div class="container">
+        <div class="site-foot__links">
+          <a href="#masthead">Internal Tools</a>
+          <a href="#masthead">Privacy</a>
+        </div>
+        <p class="site-foot__sign">
+          Made with <span class="heart" aria-hidden="true">❤</span
+          ><span class="sr-only">love</span> to build and ship · © 2026 Wenhao Kho
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Progressive enhancement only: the page is complete without this.
+      document.documentElement.classList.add("js");
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Reveal sections on first scroll into view.
+      const reveals = document.querySelectorAll("[data-reveal]");
+      if (reduce || !("IntersectionObserver" in window)) {
+        reveals.forEach((el) => el.classList.add("is-in"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
+        );
+        reveals.forEach((el) => io.observe(el));
+      }
+
+      // The nav highlight is hover-only — no scroll-spy, no current-section state.
+    </script>
+  </body>
+</html>
