@@ -4,10 +4,10 @@ A static, single-page portfolio in the **digital-notebook** style: ruled cream p
 margin rule, handwriting display type, washi-taped polaroids, pinned sticky notes, and a dashed
 build-log timeline. Every card sits at its own slight rotation and straightens on hover.
 
-No framework, no build step. Open `index.html` in a browser and it runs.
+No framework, no build step. Open `wenhao.html` in a browser and it runs.
 
 ```
-index.html      the whole page + ~30 lines of progressive-enhancement JS
+wenhao.html      the whole page + ~30 lines of progressive-enhancement JS
 styles.css      tokens, primitives, sections, responsive, motion
 assets/         placeholder art (see "Swapping in real images")
 scripts/        screenshot.mjs — visual QA harness
@@ -16,7 +16,7 @@ claude.md       the design blueprint this build was reconciled against
 
 ## Editing the content
 
-All copy lives in `index.html` as plain markup — there is no CMS or data file. The sections
+All copy lives in `wenhao.html` as plain markup — there is no CMS or data file. The sections
 appear in page order and are commented:
 
 | Section | Anchor | What's in it |
@@ -33,7 +33,7 @@ appear in page order and are commented:
 
 The `assets/` files are hand-written SVG placeholders. Replace them with real files and nothing
 about the layout changes — just keep the aspect ratios close and update the `src` extension in
-`index.html`.
+`wenhao.html`.
 
 | File | Used by | Rendered as | Source ratio |
 | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ container width, elevation. Change a token, not a rule. The three type roles are
 - `--font-mono` **JetBrains Mono** — eyebrows, dates, `#tags`, tech stacks, status pills
 
 Fonts load from Google Fonts. To go fully offline, download the three families into `assets/fonts/`
-and swap the `<link>` in `index.html` for local `@font-face` rules; the token names don't change.
+and swap the `<link>` in `wenhao.html` for local `@font-face` rules; the token names don't change.
 
 ## Reusable primitives
 
@@ -69,6 +69,26 @@ Compose new cards from these rather than writing bespoke CSS:
 
 Set a per-instance angle with `style="--rot: -1.2deg"`. Add `is-liftable` to make a card
 straighten and lift on hover.
+
+## Deploying
+
+Hosted free on GitHub Pages at **https://dariuspo.github.io/wenhao/**.
+
+`.github/workflows/deploy.yml` rebuilds and publishes on every push to `main` — no local step
+needed. It runs `node scripts/build.mjs` with no `npm install`, since the build script only uses
+`node:fs` and `node:path` (Playwright is a local-only devDependency).
+
+```bash
+npm run build     # assemble dist/ locally to preview exactly what ships
+git push          # deploy
+```
+
+`dist/` holds only `wenhao.html`, `styles.css`, and `assets/` — `claude.md`, `.mcp.json`, `.qa/`,
+`scripts/`, and `node_modules/` are never uploaded. The page source is `wenhao.html`; the build
+copies it to `wenhao.html` so hosts serve it as the directory default.
+
+All paths in the page are relative, so it works unchanged under the `/wenhao/` subpath. If you
+later move it to a custom domain or a root-level site, nothing needs to change.
 
 ## Visual QA
 
